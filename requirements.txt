@@ -1,0 +1,9 @@
+jupyter
+notebook
+jupyterlab
+metakernel
+bash_kernel
+jupytext
+ipywidgets
+matplotlib
+numpy
