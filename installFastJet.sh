@@ -8,5 +8,5 @@ rm *.tar.gz
 mkdir install
 cd fastjet*
 ./configure --prefix=${pwd}/install
-make -j2
+make -j`nproc`
 make install
