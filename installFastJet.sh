@@ -1,5 +1,3 @@
-#curl -L   | tar xz -C fastjet-3.3.2
-
 mkdir fastjet
 cd fastjet
 pwd=${PWD}

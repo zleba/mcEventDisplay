@@ -11,6 +11,9 @@ WORKDIR /
 COPY installFastJet.sh .
 RUN ./installFastJet.sh
 ENV PATH "/fastjet/install/bin:${PATH}"
+COPY installPythia.sh .
+RUN ./installPythia.sh
+ENV PATH "/pythia/install/bin:${PATH}"
 
 RUN   apt-get install -y python-pip 
 COPY requirements.txt .
