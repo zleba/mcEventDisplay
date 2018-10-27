@@ -39,9 +39,9 @@ EXPOSE 8888
 
 # When starting the container and no command is started, run bash
 #CMD ["/bin/bash"]
-COPY --chown=jovyan plot.ipynb Makefile *.cpp *.h *.hh ${HOME}/plotter/
+COPY --chown=jovyan plot.ipynb Makefile *.cpp  *.cc *.h *.hh ${HOME}/plotter/
 COPY --chown=jovyan eventFiles/eventGG2H.txt ${HOME}/plotter/eventFiles
-RUN cd plotter && make 
+RUN cd plotter && make all
 
 RUN jupyter nbextension enable --py widgetsnbextension
 CMD ["jupyter", "notebook",  "--ip", "0.0.0.0"]

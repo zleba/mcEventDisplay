@@ -5,6 +5,8 @@ rootFlags=$(shell root-config --cflags)
 pythiaLibs=$(shell pythia8-config --libs)
 pythiaFlags=$(shell pythia8-config --cflags)
 
+all: main generate
+
 main: main.cpp analyze.cpp
 	g++ -g ${fastFlags} ${rootFlags}  $^  ${fastLibs} ${rootLibs}  -o $@
 generate: generate.cc
