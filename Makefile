@@ -7,7 +7,7 @@ pythiaFlags=$(shell pythia8-config --cflags)
 
 all: main generate
 
-main: main.cpp analyze.cpp
+main: main.cpp analyze.cpp dataset.cpp
 	g++ -g ${fastFlags} ${rootFlags}  $^  ${fastLibs} ${rootLibs}  -o $@
 generate: generate.cc
 	g++ -g ${pythiaFlags}  $^   ${pythiaLibs}  -o $@

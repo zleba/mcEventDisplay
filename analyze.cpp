@@ -499,54 +499,56 @@ void Tree::Shift (int n, double shiftX, double shiftY)
 bool Tree::fill(int k)
 {
     mpiId = k;
-  tree<Edge>::iterator itP1, itP2, itP3, itP4, it1, it2, it3, it4;
+    tree<Edge>::iterator itP1, itP2, itP3, itP4, it1, it2, it3, it4;
 
-  //cout << "SECRET "<< FindStart(3) << endl;
-  //cout << "SECRET "<< FindStart(4) << endl;
-  //int id1 = event[event[1].daughter1].daughter1;
-  //int id2 = event[event[2].daughter1].daughter1;
-  //cout << "SECRETt "<< id1 << endl;
-  //cout << "SECRETt "<< id2 << endl;
+    //cout << "SECRET "<< FindStart(3) << endl;
+    //cout << "SECRET "<< FindStart(4) << endl;
+    //int id1 = event[event[1].daughter1].daughter1;
+    //int id2 = event[event[2].daughter1].daughter1;
+    //cout << "SECRETt "<< id1 << endl;
+    //cout << "SECRETt "<< id2 << endl;
+    cout << "Helenka size " << event.size() << endl;
 
-  vector<int> hardIds;
-  vector<int> hardIds23;
-  vector<int> hardIds22;
-  for(int i = 0; i < event.size(); ++i) {
-    if( event[i].status == -21 )
-       hardIds.push_back(i);
-  }
+    vector<int> hardIds;
+    vector<int> hardIds23;
+    vector<int> hardIds22;
+    for(int i = 0; i < event.size(); ++i) {
+        if( event[i].status == -21 )
+            hardIds.push_back(i);
+    }
 
-  for(int i = 0; i < event.size(); ++i) {
-    if( abs(event[i].status) == 23 )
-       hardIds23.push_back(i);
-  }
+    for(int i = 0; i < event.size(); ++i) {
+        if( abs(event[i].status) == 23 )
+            hardIds23.push_back(i);
+    }
 
-  for(int i = 0; i < event.size(); ++i) {
-    if( abs(event[i].status) == 22 )
-       hardIds22.push_back(i);
-  }
-  if(hardIds22.size() == 3 && hardIds23.size() == 4) {
-     hardIds.push_back(hardIds22[1]);
-     hardIds.push_back(hardIds22[2]);
-  }
-  else if(hardIds22.size() == 2 && hardIds23.size() == 3) {
-     hardIds.push_back(hardIds23[0]);
-     hardIds.push_back(hardIds22[1]);
+    for(int i = 0; i < event.size(); ++i) {
+        if( abs(event[i].status) == 22 )
+            hardIds22.push_back(i);
+    }
+    if(hardIds22.size() == 3 && hardIds23.size() == 4) {
+        hardIds.push_back(hardIds22[1]);
+        hardIds.push_back(hardIds22[2]);
+    }
+    else if(hardIds22.size() == 2 && hardIds23.size() == 3) {
+        hardIds.push_back(hardIds23[0]);
+        hardIds.push_back(hardIds22[1]);
 
-  }
-  else if(hardIds23.size() == 2) {
-     hardIds.push_back(hardIds23[0]);
-     hardIds.push_back(hardIds23[1]);
-  }
-  else {
-	 cout << "Unknown hard process" << endl;
-     cout << hardIds22.size() <<" "<< hardIds23.size() << endl;
-     for(auto id : hardIds22)
-        cout <<"id22 " <<  id << endl;
-     for(auto id : hardIds23)
-        cout <<"id23 "<< id << endl;
-    exit(1);
-  }
+    }
+    else if(hardIds23.size() == 2) {
+        hardIds.push_back(hardIds23[0]);
+        hardIds.push_back(hardIds23[1]);
+    }
+    else {
+        cout << "Unknown hard process" << endl;
+        cout << "Event size " << event.size() << endl;
+        cout << hardIds22.size() <<" "<< hardIds23.size() << endl;
+        for(auto id : hardIds22)
+            cout <<"id22 " <<  id << endl;
+        for(auto id : hardIds23)
+            cout <<"id23 "<< id << endl;
+        exit(1);
+    }
 
 
   /*
@@ -1779,11 +1781,26 @@ void Tree::plotFeyn(bool showNames, bool showScales)
 
 void Tree::PlotAll(string fName)
 {
-	read();
+	//read();
 	TCanvas *can = new TCanvas("can", "Canvas", 1200, 1200);
     gPad->Range(-30,-30,30,30);
     gPad->Clear();
 
+    for(int k = 0; k < 100; ++k) {
+		bool status = fill(k);
+		if(status == false) {
+			break;
+		}
+		CalcLayout();
+		ImproveLayout();
+
+		plotFeyn(true,true);
+        cout << "RADEK plotting " << k << endl;
+        can->SaveAs(Form("diagrams/test_%d_%d.svg",eventId, k));
+        can->Clear();
+    }
+
+    /*
 	for(int k=0; k < 100; ++k) {
 		bool status = fill(k);
 		if(status == false) {
@@ -1805,6 +1822,7 @@ void Tree::PlotAll(string fName)
 			can->SaveAs("ahoj.png");
 
 	}
+    */
 
 }
 

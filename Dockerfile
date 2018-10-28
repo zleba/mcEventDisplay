@@ -14,10 +14,11 @@ ENV PATH "/fastjet/install/bin:${PATH}"
 COPY installPythia.sh .
 RUN ./installPythia.sh
 ENV PATH "/pythia/install/bin:${PATH}"
+ENV PYTHIA8DATA "/pythia/install/share/Pythia8/xmldoc"
 
-RUN   apt-get install -y python-pip 
+RUN   apt-get install -y  python3  python3-pip 
 COPY requirements.txt .
-RUN  sudo -H pip install --upgrade pip && sudo -H pip install --trusted-host pypi.python.org -r requirements.txt
+RUN  sudo -H pip3 install --upgrade pip && sudo -H pip3 install --trusted-host pypi.python.org -r requirements.txt
 
 
 
