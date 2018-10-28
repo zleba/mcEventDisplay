@@ -32,7 +32,7 @@ RUN adduser --disabled-password --gecos "Default user" \
 WORKDIR ${HOME}
 USER ${NB_USER}
 RUN  mkdir .jupyter && echo "c.NotebookApp.token = ''" > ${HOME}/.jupyter/jupyter_notebook_config.py
-RUN  mkdir -p ${HOME}/plotter/eventFiles   ${HOME}/temp
+RUN  mkdir -p ${HOME}/plotter/eventFiles  ${HOME}/plotter/diagrams    ${HOME}/temp
 #COPY --chown=jovyan exerciseNb ${HOME}/exerciseNb
 #COPY --chown=jovyan exerciseNbExec ${HOME}/exerciseNbExec
 #COPY --chown=jovyan exercisePy ${HOME}/exercisePy
